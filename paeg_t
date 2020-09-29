@@ -1,0 +1,37 @@
+***      START PAEG TRANSPORT      ***
+
+* sectors definition for agriproducts
+
+set      agro(i)         /pdr, gro, osd, c_b, oap, rmk, agr/;
+
+* define transportation cost for bilateral flow among brazilian macro regions
+
+vtwr("otp",agro,bra,r) = (1-cvar)*vtwr0("otp",agro,bra,r);
+
+$ontext
+* if necessary do it for table format
+
+sets
+
+         agro(i)       agropecuaria    /pdr, gro, osd, c_b, oap, rmk, agr/
+         rbra(s)       regioes         /nor, nde, coe, sde, sul/;
+
+table    t(i,s)  valor do choque crescente
+
+         nor     nde     coe     sde     sul
+pdr      0.01    0.01    0.01    0.01    0.01
+gro      0.01    0.01    0.01    0.01    0.01
+osd      0.01    0.01    0.01    0.01    0.01
+c_b      0.01    0.01    0.01    0.01    0.01
+oap      0.01    0.01    0.01    0.01    0.01
+rmk      0.01    0.01    0.01    0.01    0.01
+agr      0.01    0.01    0.01    0.01    0.01
+;
+
+# for 0.01 number to projected gain or loss in efficiency
+# this is determinate in a regression model or literature
+
+vtwr("otp",i,s,r) = (1-t(i,s)) * vtwr0("otp",i,s,r);
+$offtext
+
+***    END PAEG TRANSPORT      ***
